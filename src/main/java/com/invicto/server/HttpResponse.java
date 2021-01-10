@@ -70,19 +70,18 @@ public class HttpResponse {
             }
             writer.write(body);
         } catch (HttpException | IOException e) {
-            logger.log(Level.SEVERE, "Something bad happened while trying to send data to the client");
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Something bad happened while trying to send data to the client", e);
         } finally {
             try {
                 writer.close();
             } catch (NullPointerException | IOException e) {
-                e.printStackTrace();
+                logger.log(Level.SEVERE, "Exception on close of DataOutputStream", e);
             }
         }
     }
 
     protected void writeLine(String line) throws IOException {
-        writer.writeBytes(line + "\n");
+        writer.writeBytes(line + "\r\n");
     }
 
     public void setBody(String body) {
