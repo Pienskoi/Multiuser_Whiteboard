@@ -11,10 +11,16 @@ import com.invicto.storage.postgresql.Connector;
 import com.invicto.storage.postgresql.RoomRepositoryImpl;
 import com.invicto.storage.postgresql.UserRepositoryImpl;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+
 public class App {
-    public static void main(String[] args) {
-        //Connector dbConnector = new Connector("jdbc:postgresql://localhost:5432/application", "postgres", "invicto");
-        Connector dbConnector = new Connector("jdbc:postgresql://ec2-52-211-108-161.eu-west-1.compute.amazonaws.com:5432/do00mpavp4pvs", "zwjzffiwjjkthd", "14dbcd2930ae062fe55da34c637474a6065b550392e4ed99f7b2d76dac264ba2");
+    public static void main(String[] args) throws URISyntaxException {
+        URI dbUri = new URI(System.getenv("DATABASE_URL"));
+        String username = dbUri.getUserInfo().split(":")[0];
+        String password = dbUri.getUserInfo().split(":")[1];
+        String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath();
+        Connector dbConnector = new Connector(dbUrl, username, password);
         dbConnector.getConnection();
         UserRepository userRepository = new UserRepositoryImpl(dbConnector);
         RoomRepository roomRepository = new RoomRepositoryImpl(dbConnector, userRepository);
