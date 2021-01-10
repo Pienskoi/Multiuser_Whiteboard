@@ -1,1 +1,1 @@
-web: java -jar target/Multiuser_Whiteboard-1.0-SNAPSHOT.jar
+web: java -cp target/classes:target/dependency/* com.invicto.App
