@@ -60,7 +60,7 @@ public class HttpResponse {
                     b.append(key);
                     b.append(": ");
                     b.append(getHeader(key));
-                    b.append("\n");
+                    b.append("\r\n");
                 }
                 writeLine(b.toString());
             }

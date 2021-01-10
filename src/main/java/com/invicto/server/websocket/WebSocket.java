@@ -156,7 +156,7 @@ public class WebSocket extends Thread {
     }
 
     public void write(String msg) throws IOException {
-        connection.getOutputStream().write((msg + "\n").getBytes());
+        connection.getOutputStream().write((msg + "\r\n").getBytes());
         connection.getOutputStream().flush();
     }
 
