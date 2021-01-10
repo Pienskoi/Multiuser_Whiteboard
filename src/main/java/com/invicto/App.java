@@ -26,7 +26,7 @@ public class App {
         RoomRepository roomRepository = new RoomRepositoryImpl(dbConnector, userRepository);
         UserService userService = new UserService(userRepository);
         RoomService roomService = new RoomService(roomRepository, userRepository);
-        HttpServer server = new HttpServer();
+        HttpServer server = new HttpServer(Integer.parseInt(System.getenv("PORT")));
         HttpRouter router = server.getRouter();
         router.addHandler("/create", new CreateHandler(router, userService, roomService));
         server.run();
